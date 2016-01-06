@@ -7,5 +7,4 @@
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}}
 
-  :immutant {:war {:destination "/Users/richardharrington/Workspace/immutant-demo/wildfly-9.0.1.Final"
-                   :nrepl {:start? true}}})
+  :immutant {:war {:nrepl {:start? true}}})
