@@ -3,13 +3,11 @@
             [immutant.util :as util])
   (:gen-class))
 
-(defn get-context []
-  (when-not (util/in-container?)
-    (msg/context :host "localhost")))
-
 (defn request [qname request-data callback]
-  (with-open [ctx (get-context)]
-    (callback @(msg/request (msg/queue qname :context ctx) request-data))))
+  (if (util/in-container?)
+    (callback @(msg/request (msg/queue qname) request-data))
+    (with-open [ctx (msg/context :host "localhost" :port 5445)]
+      (callback @(msg/request (msg/queue qname :context ctx) request-data)))))
 
 (defn -main
   [& args]
